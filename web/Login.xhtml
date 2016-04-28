@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">Top chef Login  </ui:define>
+        <ui:define name="body">		
+        <div class="row">
+        <div class="col-md-5 col-md-offset-4">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+         
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal" role="form" rendered="true" name="loginForm" method="POST" action="j_security_check">
+            <div class="form-group">
+              <label for="username" class="col-sm-5 control-label">Chef Name:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" id="username" placeholder="Enter username" name="j_username"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="pwd" class="col-sm-5 control-label">Password Chef:</label>
+              <div class="col-sm-6">
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="j_password"/>
+              </div>
+            </div>
+            <div class="form-group last">
+              <div class="col-sm-offset-5 col-sm-9">
+              	<input type="submit" class="btn btn-default" id="submit" value="Submit"/>
+                <input type="reset" class="btn btn-default" value="Reset"/>
+              </div>
+            </div>			
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+   </ui:define>
+   </ui:composition>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewRecetteTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+
+      
+         <div class="row">
+        <div class="col s12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title"><h:outputText value="#{recetteController.selected.nom}"/></span>
+              <p><span><h:outputText value="#{bundle.ViewRecetteLabel_tempsPreparation}"/></span>
+                    <h:outputText value="#{recetteController.selected.tempsPreparation}" title="#{bundle.ViewRecetteTitle_tempsPreparation}"/></p>
+                   <p> <h:outputText value="#{bundle.ViewRecetteLabel_tempsCuisson}"/>
+                    <h:outputText value="#{recetteController.selected.tempsCuisson}" title="#{bundle.ViewRecetteTitle_tempsCuisson}"/></p>
+                    <p><h:outputText value="#{bundle.ViewRecetteLabel_preparation}"/>
+                    <h:outputText value="#{recetteController.selected.preparation}" title="#{bundle.ViewRecetteTitle_preparation}"/></p>
+                    <p><h:outputText value="#{bundle.ViewRecetteLabel_remarque}"/>
+                    <h:outputText value="#{recetteController.selected.remarque}" title="#{bundle.ViewRecetteTitle_remarque}"/></p>
+                    <p><h:outputText value="#{bundle.ViewRecetteLabel_difficulte}"/>
+                    <h:outputText value="#{recetteController.selected.difficulte}" title="#{bundle.ViewRecetteTitle_difficulte}"/></p>
+                    <p><h:outputText value="#{bundle.ViewRecetteLabel_motsCles}"/>
+                    <h:outputText value="#{recetteController.selected.motsCles}" title="#{bundle.ViewRecetteTitle_motsCles}"/></p>
+                   <p><h:outputText value="#{bundle.ViewRecetteLabel_auteur}"/>
+                    <h:outputText value="#{recetteController.selected.auteur}" title="#{bundle.ViewRecetteTitle_auteur}"/></p>
+            </div>
+            <div class="card-action">
+              <h:commandLink action="#{recetteController.destroyAndView}" value="#{bundle.ViewRecetteDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewRecetteEditLink}"/>
+            </div>
+          </div>
+        </div>
+      </div>
+     </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListIngredientTitle}"></h:outputText>
+        </ui:define>
+         
+        <ui:define name="body">
+             <h:form id="myForm">
+                <h:outputLabel for="searchInput">Mots clés </h:outputLabel>
+                <h:inputText id="searchInput" value="#{ingredientController.searchable.nom}" size="20" maxlength="60" />
+                <h:commandButton value="Recherche" action="#{ingredientController.search()}" styleClass="sansLabel" />
+                <h:commandButton value="Reset" action="#{ingredientController.resetSearch()}" styleClass="sansLabel" />
+                <br />
+            </h:form> 
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListIngredientEmpty}" rendered="#{ingredientController.items.rowCount == 0}"/>
+                <h:panelGroup class="pagination" rendered="#{ingredientController.items.rowCount > 0}">
+                    <h:outputText value="#{ingredientController.pagination.pageFirstItem + 1}..#{ingredientController.pagination.pageLastItem + 1}/#{ingredientController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{ingredientController.previous}" value="#{bundle.Previous} #{ingredientController.pagination.pageSize}" rendered="#{ingredientController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{ingredientController.next}" value="#{bundle.Next} #{ingredientController.pagination.pageSize}" rendered="#{ingredientController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{ingredientController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 5px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListIngredientTitle_idIngredient}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idIngredient}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListIngredientTitle_nom}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListIngredientTitle_quantite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.quantite}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListIngredientTitle_unite}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.unite}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListIngredientTitle_idRecette}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idRecette.nom}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink class="waves-effect waves-light btn" action="#{ingredientController.prepareView}" value="#{bundle.ListIngredientViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="waves-effect waves-light btn" action="#{ingredientController.prepareEdit}" value="#{bundle.ListIngredientEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink class="waves-effect waves-light btn" action="#{ingredientController.destroy}" value="#{bundle.ListIngredientDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink class="waves-effect waves-light btn" action="#{ingredientController.prepareCreate}" value="#{bundle.ListIngredientCreateLink}"/>
+                <br />
+                <br />
+                <h:link class="waves-effect waves-light btn" outcome="/index" value="#{bundle.ListIngredientIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

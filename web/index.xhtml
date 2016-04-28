@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+               <div class="row">
+                <div class="col s4">
+                    <div class="icon-block">
+                        <h:link outcome="/recette/List">
+                            <h2 class="center blue-text"><i class="large material-icons">view_module</i></h2>
+                            <h5 class="center black-text">Mes Recettes</h5>
+                            <p class="light black-text">Recette élaboré par les meilleurs chefs étoilés.</p>
+                        </h:link>
+                    </div>          
+                </div>
+                     <div class="col s4">
+                    <div class="icon-block">
+                    <h:link outcome="/ingredient/List">
+                        <h2 class="center blue-text"><i class="large material-icons">view_list</i></h2>
+                        <h5 class="center black-text">Ingredient</h5>
+
+                        <p class="light black-text">Voir toutes la liste des ingredients</p>
+                    </h:link>
+                </div>      </div>
+                <div class="col s4">
+                    <div class="icon-block">
+                    <h:link outcome="/utilisateur/List">
+                        <h2 class="center blue-text"><i class="large material-icons">perm_identity</i></h2>
+                        <h5 class="center black-text">Chef</h5>
+                        <p class="light black-text">Vous pouvez ici modifier vos informations personnelles</p>
+                    </h:link>
+                    </div>      
+                </div>
+                </div>
+            
+            
+            
+            
+        </ui:define>
+    </ui:composition>
+</html>

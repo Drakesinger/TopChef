@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUtilisateurTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_pseudo}"/>
+                    <h:outputText value="#{utilisateurController.selected.pseudo}" title="#{bundle.ViewUtilisateurTitle_pseudo}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_password}"/>
+                    <h:outputText value="#{utilisateurController.selected.password}" title="#{bundle.ViewUtilisateurTitle_password}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_mail}"/>
+                    <h:outputText value="#{utilisateurController.selected.mail}" title="#{bundle.ViewUtilisateurTitle_mail}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_nom}"/>
+                    <h:outputText value="#{utilisateurController.selected.nom}" title="#{bundle.ViewUtilisateurTitle_nom}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_prenom}"/>
+                    <h:outputText value="#{utilisateurController.selected.prenom}" title="#{bundle.ViewUtilisateurTitle_prenom}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_isAdmin}"/>
+                    <h:outputText value="#{utilisateurController.selected.isAdmin}" title="#{bundle.ViewUtilisateurTitle_isAdmin}"/>
+                    <h:outputText value="#{bundle.ViewUtilisateurLabel_etat}"/>
+                    <h:outputText value="#{utilisateurController.selected.etat}" title="#{bundle.ViewUtilisateurTitle_etat}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink class="waves-effect waves-light btn" action="#{utilisateurController.destroyAndView}" value="#{bundle.ViewUtilisateurDestroyLink}"/>
+                <br />
+                <br />
+                <h:link class="waves-effect waves-light btn" outcome="Edit" value="#{bundle.ViewUtilisateurEditLink}"/>
+                <br />
+                <h:commandLink class="waves-effect waves-light btn" action="#{utilisateurController.prepareCreate}" value="#{bundle.ViewUtilisateurCreateLink}" />
+                <br />
+                <h:commandLink class="waves-effect waves-light btn" action="#{utilisateurController.prepareList}" value="#{bundle.ViewUtilisateurShowAllLink}"/>
+                <br />
+                <br />
+                <h:link class="waves-effect waves-light btn" outcome="/index" value="#{bundle.ViewUtilisateurIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

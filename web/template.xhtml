@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <h:outputStylesheet library="css" name="materialize.min.css"  />
+
+        <title>Top Chef</title>
+    </h:head>
+
+    <h:body>
+        
+        <!-- Navbar goes here -->
+        <nav class="blue">
+            <div class="nav-wrapper">
+                <ul class="">
+                    <ui:fragment rendered="#{empty request.remoteUser}">
+                        <li><h:link outcome="/Login" value="Login"/></li>
+                         <li><h:link outcome="/recette/List" value="Mes recettes"/></li>
+                        <li><h:link outcome="/ingredient/List" value="Mes ingredients"/></li>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not empty request.remoteUser}">
+                        <h:form>
+                            <li><h:commandLink value="Déconnexion" action="#{userAuthentification.logout()}" /></li>
+                        </h:form>
+                        <li>Bienvenue #{userAuthentification.assistant.prenom}</li>
+                    </ui:fragment>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><h:link outcome="/index" value="Accueil"/></li>
+                    <ui:fragment rendered="#{not empty request.remoteUser}">
+                        <li><h:link outcome="/recette/List" value="Mes recettes"/></li>
+                        <li><h:link outcome="/ingredient/List" value="Mes ingredients"/></li>
+                   </ui:fragment>
+                </ul>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="section">
+                
+                <ui:insert name="body">Default Body</ui:insert>
+                
+            </div>
+        </div>
+        
+        <footer class="page-footer blue">
+            <div class="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">TOP CHEF</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2016 Top chef 2016 | <a class="grey-text text-lighten-4" href="http://materializecss.com/" target="_blank">Design Materialize</a>
+                </div>
+            </div>
+        </footer>        
+        
+        <!-- Importer à la fin : Framework CSS Materialize-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <h:outputScript library="js" name="materialize.js" />
+        <h:outputScript library="js" name="materialize.min.js" />
+        <br />
+        <h:link outcome="/recette/List" value="Show All recette Items"/>
+        <br />
+        <h:link outcome="/ingredient/List" value="Show All ingredient Items"/>
+        <br />       
+      <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
+        
+    </h:body>
+
+</html>
