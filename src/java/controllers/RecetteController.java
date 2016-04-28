@@ -6,10 +6,11 @@ import controllers.util.PaginationHelper;
 import facades.RecetteFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,20 +19,46 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "recetteController")
+@Named("recetteController")
 @SessionScoped
 public class RecetteController implements Serializable {
 
     private Recette current;
+        private Recette searchRectte;
+
     private DataModel items = null;
     @EJB
     private facades.RecetteFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public RecetteController() {
+    public RecetteController() { 
+         searchRectte = new Recette();
+         searchRectte.setNom("");
+      
     }
-
+    public void resetSearch()
+    {
+        searchRectte.setNom("");
+        search();
+    }
+    
+    public void search()
+    {
+        recreatePagination();
+        
+        recreateModel();
+    }
+        
+    public Recette getSearchable() {
+        if (searchRectte == null) {
+            searchRectte = new Recette();
+            searchRectte.setNom("");
+            
+        }
+        return searchRectte;
+    }
+   
     public Recette getSelected() {
         if (current == null) {
             current = new Recette();
@@ -187,6 +214,22 @@ public class RecetteController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
+    // Selection avec le nom de la recette
+    public SelectItem[] getItemsAvailableByName() {
+        List<Recette> listRectte = ejbFacade.findAll();
+        SelectItem[] s = new SelectItem[listRectte.size()];
+        int i = 0;
+        for(Recette a : listRectte)
+        {
+            s[i] = new SelectItem(a,a.getNom());
+            i++;
+        }
+        return s;
+    }
+
+    public Recette getRecette(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
 
     @FacesConverter(forClass = Recette.class)
     public static class RecetteControllerConverter implements Converter {
@@ -198,7 +241,7 @@ public class RecetteController implements Serializable {
             }
             RecetteController controller = (RecetteController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "recetteController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getRecette(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {

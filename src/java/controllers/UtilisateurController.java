@@ -8,8 +8,8 @@ import facades.UtilisateurFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "utilisateurController")
+@Named("utilisateurController")
 @SessionScoped
 public class UtilisateurController implements Serializable {
 
@@ -188,6 +188,10 @@ public class UtilisateurController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public Utilisateur getUtilisateur(java.lang.String id) {
+        return ejbFacade.find(id);
+    }
+
     @FacesConverter(forClass = Utilisateur.class)
     public static class UtilisateurControllerConverter implements Converter {
 
@@ -198,7 +202,7 @@ public class UtilisateurController implements Serializable {
             }
             UtilisateurController controller = (UtilisateurController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "utilisateurController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getUtilisateur(getKey(value));
         }
 
         java.lang.String getKey(String value) {

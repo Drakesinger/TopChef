@@ -27,7 +27,10 @@
                     </ui:fragment>
                     <ui:fragment rendered="#{not empty request.remoteUser}">
                         <h:form>
-                            <li><h:commandLink value="Déconnexion" action="#{userAuthentification.logout()}" /></li>
+                            <li>
+                                <a href="Logout.jsp">Déconnexion</a>
+                                <!--<h:commandLink value="Déconnexion" action="#{userAuthentification.logout()}" />-->
+                            </li>
                         </h:form>
                         <li>Bienvenue #{userAuthentification.assistant.prenom}</li>
                     </ui:fragment>

@@ -8,8 +8,11 @@ import facades.IngredientFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+
+
+import javax.inject.Named;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,18 +21,42 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "ingredientController")
+@Named("ingredientController")
 @SessionScoped
 public class IngredientController implements Serializable {
 
     private Ingredient current;
     private DataModel items = null;
+    private Ingredient ingSearch;
     @EJB
     private facades.IngredientFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+   
     public IngredientController() {
+        ingSearch = new Ingredient();
+        ingSearch.setNom("");
+    }
+
+    public void resetSearch()
+    {
+        ingSearch.setNom("");
+        search();
+    }
+    
+    public void search()
+    {
+        recreatePagination();
+        recreateModel();
+    }
+        
+    public Ingredient getSearchable() {
+        if (ingSearch == null) {
+            ingSearch = new Ingredient();
+            ingSearch.setNom("");
+        }
+        return ingSearch;
     }
 
     public Ingredient getSelected() {
@@ -56,6 +83,8 @@ public class IngredientController implements Serializable {
                 @Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                  //return new ListDataModel(getFacade().search(ingSearch.getNom()));
+
                 }
             };
         }
@@ -80,6 +109,7 @@ public class IngredientController implements Serializable {
     }
 
     public String create() {
+        
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("IngredientCreated"));
@@ -188,6 +218,10 @@ public class IngredientController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public Ingredient getIngredient(java.lang.Integer id) {
+        return ejbFacade.find(id);
+    }
+   
     @FacesConverter(forClass = Ingredient.class)
     public static class IngredientControllerConverter implements Converter {
 
@@ -198,7 +232,7 @@ public class IngredientController implements Serializable {
             }
             IngredientController controller = (IngredientController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "ingredientController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getIngredient(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {

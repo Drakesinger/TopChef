@@ -12,10 +12,11 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author horia.mut
+ * @author wassimajjali
  */
 @Stateless
 public class UtilisateurFacade extends AbstractFacade<Utilisateur> {
+
     @PersistenceContext(unitName = "TopChefPU")
     private EntityManager em;
 
